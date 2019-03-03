@@ -10,8 +10,12 @@ import onmt.opts
 def canonicalize_smiles(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is not None:
-        return Chem.MolToSmiles(mol, isomericSmiles=True)
+        sm = Chem.MolToSmiles(mol, isomericSmiles=True)
+        # if sm != smiles:
+        #     print('smiles:', smiles, sm)
+        return sm
     else:
+        # print('smiles and mol:', smiles, mol)
         return ''
 
 def get_rank(row, base, max_rank):
@@ -23,7 +27,7 @@ def get_rank(row, base, max_rank):
 def main(opt):
     with open(opt.targets, 'r') as f:
         targets = [''.join(line.strip().split(' ')) for line in f.readlines()]
-
+    print('opt.beam_size:', opt.beam_size, len(targets))
     predictions = [[] for i in range(opt.beam_size)]
 
     test_df = pd.DataFrame(targets)
@@ -34,7 +38,9 @@ def main(opt):
         for i, line in enumerate(f.readlines()):
             predictions[i % opt.beam_size].append(''.join(line.strip().split(' ')))
 
+    print('len of predictions:', len(predictions), len(predictions[0]))
     for i, preds in enumerate(predictions):
+        print('idx:', i, len(preds))
         test_df['prediction_{}'.format(i + 1)] = preds
         test_df['canonical_prediction_{}'.format(i + 1)] = test_df['prediction_{}'.format(i + 1)].apply(
             lambda x: canonicalize_smiles(x))
@@ -42,7 +48,6 @@ def main(opt):
     test_df['rank'] = test_df.apply(lambda row: get_rank(row, 'canonical_prediction_', opt.beam_size), axis=1)
 
     correct = 0
-
     for i in range(1, opt.beam_size+1):
         correct += (test_df['rank'] == i).sum()
         invalid_smiles = (test_df['canonical_prediction_{}'.format(i)] == '').sum()

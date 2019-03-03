@@ -57,7 +57,7 @@ def build_save_in_shards_using_shards_size(src_corpus, tgt_corpus, fields,
     The reason we do this is to avoid taking up too much memory due
     to sucking in a huge corpus file.
     """
-
+    print('build_save_in_shards_using_shards_size')
     with codecs.open(src_corpus, "r", encoding="utf-8") as fsrc:
         with codecs.open(tgt_corpus, "r", encoding="utf-8") as ftgt:
             logger.info("Reading source and target files: %s %s."
@@ -211,6 +211,7 @@ def main():
     init_logger(opt.log_file)
     logger.info("Extracting features...")
 
+    print('opt.data_type:', opt.data_type, opt.train_src, opt.train_tgt)
     src_nfeats = inputters.get_num_features(
         opt.data_type, opt.train_src, 'src')
     tgt_nfeats = inputters.get_num_features(
@@ -220,9 +221,12 @@ def main():
 
     logger.info("Building `Fields` object...")
     fields = inputters.get_fields(opt.data_type, src_nfeats, tgt_nfeats)
+    for k, f in fields.items():
+        print(k)
 
     logger.info("Building & saving training data...")
     train_dataset_files = build_save_dataset('train', fields, opt)
+    print('train_dataset_files:', train_dataset_files)
 
     logger.info("Building & saving validation data...")
     build_save_dataset('valid', fields, opt)

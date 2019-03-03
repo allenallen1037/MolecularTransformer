@@ -48,6 +48,7 @@ def main(opt):
             p.join()
 
     elif nb_gpu == 1:  # case 1 GPU only
+        print('single_main(opt, 0)')
         single_main(opt, 0)
     else:   # case only CPU
         single_main(opt, -1)
@@ -111,8 +112,12 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     opts.add_md_help_argument(parser)
+   
     opts.model_opts(parser)
+   
     opts.train_opts(parser)
-
+   
     opt = parser.parse_args()
+    print(opt)
+
     main(opt)
