@@ -42,7 +42,7 @@ def parse_args():
     opt = parser.parse_args()
     torch.manual_seed(opt.seed)
 
-    check_existing_pt_files(opt)
+    #check_existing_pt_files(opt)
 
     return opt
 
@@ -233,7 +233,6 @@ def main():
 
     logger.info("Building & saving vocabulary...")
     build_save_vocab(train_dataset_files, fields, opt)
-
 
 if __name__ == "__main__":
     main()

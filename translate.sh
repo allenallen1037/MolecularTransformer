@@ -1,5 +1,5 @@
 dataset=MIT_mixed
-model=${dataset}_model_step_50000.pt
+model=${dataset}_model_avg.pt
 
 python translate.py -model experiments/models/${model} \
                     -gpu 2 \

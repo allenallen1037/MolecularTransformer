@@ -10,6 +10,7 @@ def average_models(model_files):
     avg_generator = None
 
     for i, model_file in enumerate(model_files):
+        print(i, model_file)
         m = torch.load(model_file)
         model_weights = m['model']
         generator_weights = m['generator']

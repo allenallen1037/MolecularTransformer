@@ -1,4 +1,4 @@
-dataset=MIT_mixed # MIT_mixed_augm / STEREO_mixed_augm
+dataset=MIT_mixed_augm # MIT_mixed_augm / STEREO_mixed_augm
 python preprocess.py -train_src data/${dataset}/src-train.txt \
                      -train_tgt data/${dataset}/tgt-train.txt \
                      -valid_src data/${dataset}/src-val.txt \
