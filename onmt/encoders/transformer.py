@@ -100,7 +100,6 @@ class TransformerEncoder(EncoderBase):
         self._check_args(src, lengths)
 
         emb = self.embeddings(src)
-
         out = emb.transpose(0, 1).contiguous()
         words = src[:, :, 0].transpose(0, 1)
         w_batch, w_len = words.size()

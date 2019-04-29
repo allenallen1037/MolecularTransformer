@@ -233,7 +233,7 @@ class Trainer(object):
                 src_lengths = None
 
             tgt = inputters.make_features(batch, 'tgt')
-
+            
             # F-prop through the model.
             outputs, attns, _ = self.model(src, tgt, src_lengths)
 

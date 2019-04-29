@@ -33,4 +33,6 @@ if __name__ == "__main__":
 
     opt = parser.parse_args()
     logger = init_logger(opt.log_file)
+    print(opt)
+    
     main(opt)

@@ -43,7 +43,6 @@ def parse_args():
     torch.manual_seed(opt.seed)
 
     #check_existing_pt_files(opt)
-
     return opt
 
 
